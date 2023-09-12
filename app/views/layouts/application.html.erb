@@ -7,10 +7,19 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag 'navbar.css' %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+  <header>
+  <%= render partial: "shared/navbar" %>
+  </header>
+  <div class:flashy>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
     <%= yield %>
+    </div>
+    </main>
   </body>
 </html>
