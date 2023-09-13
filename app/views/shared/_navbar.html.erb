@@ -1,0 +1,13 @@
+<div class='navCont'>
+  <nav class='navbar'>
+  <%= link_to 'RecipeApp', users_path, class:'logo' %>
+    <section class='controls'>
+      <% if user_signed_in?%>
+      <%= link_to 'Edit registration', edit_user_registration_path , class: 'navlinks'%>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'navlinks'%>
+      <% else %>
+      <%= link_to 'Sign In', user_session_path,class: 'navlinks'%>
+      <% end %>      
+    </section>
+  </nav>  
+</div>
