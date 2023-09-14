@@ -1,0 +1,18 @@
+<h1>Public Recipes</h1>
+<div class="recipe-container flex-col">
+<ul>
+  <% @public_recipes.each do |recipe| %>
+    <div class="recipe-card">
+        <div>
+            <h2><%=link_to recipe.name, recipe_path(recipe)%></h2>
+            <p>By: <%= recipe.user.name %></p>
+        </div>
+        <div>
+            <p>Total Food Item:</p>
+            <p>Total Price: $</p>
+        </div>
+    </div>
+  <% end %>
+</ul>
+</div>
+
