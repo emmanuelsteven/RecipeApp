@@ -16,9 +16,9 @@
 <h5>Cooking time: <%=@recipe.cooking_time%> mins</h5>
 <h5>Steps:<br><%=@recipe.description%></h5>
 <p class="public-toggle-buttons-row">
-<button>Generate shopping list</button>
-<% if current_user == @recipe.user %>      
-      <%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
+<%= link_to 'Generate Shopping List', class: 'btn btn-primary' %>     
+<% if current_user == @recipe.user %> 
+<%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
 <% end %>
 </p>
 
@@ -35,16 +35,21 @@
     </tr>
   </thead>
   <tbody>
+  <% @recipe.foods.each do |food| %>
       <tr>
-        <td>Lasagna</td>
-        <td>Quantity</td>
-        <td>Measurement unit</td>
-        <td>Price</td>
+         <td><%= food.name %></td>
+        <td><%= food.quantity %></td>
+        <td><%= food.measurement_unit %></td>
+        <td><%= number_to_currency(food.price) %></td>
         <td>
-         <button>Modify</button>
-        <button>Remove</button>
+          <% if current_user == @recipe.user %>
+            <%= form_tag(remove_food_recipe_path(@recipe, food_id: food.id), method: :delete) do %>
+            <%= submit_tag 'Remove Food', class: 'btn btn-danger btn-sm' %>
+            <% end %>
+          <% end %>
         </td>
       </tr>
+       <% end %>
   </tbody>
 </table>
 </div>

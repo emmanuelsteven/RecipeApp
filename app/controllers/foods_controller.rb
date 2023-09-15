@@ -2,7 +2,7 @@ class FoodsController < ApplicationController
   before_action :set_food, only: %i[show destroy]
 
   def index
-    @foods = Food.all
+    @foods = current_user.foods.all
   end
 
   def show
@@ -20,7 +20,7 @@ class FoodsController < ApplicationController
     @food = @user.foods.new(food_params) # Use `foods` instead of `food`
 
     if @food.save
-      redirect_to user_foods_path(current_user), notice: 'Food List was successfully created.'
+      redirect_to foods_path(current_user), notice: 'Food List was successfully created.'
     else
       render :new
     end
@@ -29,7 +29,7 @@ class FoodsController < ApplicationController
   def destroy
     @food = Food.find(params[:id])
     @food.destroy
-    redirect_to user_foods_path(current_user), notice: 'Food List was successfully destroyed.'
+    redirect_to foods_path(current_user), notice: 'Food List was successfully destroyed.'
   end
 
   private
