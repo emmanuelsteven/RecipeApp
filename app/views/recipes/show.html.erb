@@ -16,7 +16,7 @@
 <h5>Cooking time: <%=@recipe.cooking_time%> mins</h5>
 <h5>Steps:<br><%=@recipe.description%></h5>
 <p class="public-toggle-buttons-row">
-<%= link_to 'Generate Shopping List', class: 'btn btn-primary' %>     
+<%= link_to 'Generate Shopping List', generate_shopping_list_recipe_path(@recipe), class: 'btn btn-primary' %>   
 <% if current_user == @recipe.user %> 
 <%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
 <% end %>
