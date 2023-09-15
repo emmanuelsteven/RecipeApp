@@ -1,1 +1,50 @@
-<h1>Details page</h1>
+<a href="<%= recipe_path()%>">
+  <%=link_to '⬅',recipes_path, class: 'btn btn-lg'%>
+</a>
+<h1 class="center-text"> <%=@recipe.name%> </h1>
+<div class="recipe-preview-card flex-col">
+<div class="public-toggle-buttons-row"><h5>Preparation time: <%=@recipe.preparation_time%> mins</h5> 
+<h5>Public:  <% if current_user == @recipe.user %>
+          <% if @recipe.public %>
+            <%= link_to 'Make Private', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
+          <% else %>
+            <%= link_to 'Make Public', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
+          <% end %>
+        <% end %>
+</h5>
+</div>
+<h5>Cooking time: <%=@recipe.cooking_time%> mins</h5>
+<h5>Steps:<br><%=@recipe.description%></h5>
+<p class="public-toggle-buttons-row">
+<button>Generate shopping list</button>
+<% if current_user == @recipe.user %>      
+      <%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
+<% end %>
+</p>
+
+<!-- Table-->
+<h3>Required Food Items</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Food</th>
+      <th>Quantity</th>
+      <th>Measurement Unit</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td>Lasagna</td>
+        <td>Quantity</td>
+        <td>Measurement unit</td>
+        <td>Price</td>
+        <td>
+         <button>Modify</button>
+        <button>Remove</button>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
