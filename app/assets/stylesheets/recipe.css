@@ -4,6 +4,16 @@
   padding: 3% 15%;
 }
 
+.recipe-container ul {
+  display: flex;
+  gap: 20px;
+}
+
+.custom-btn {
+  width: 200px;
+  align-self: flex-end;
+}
+
 .recipe-card {
   display: flex;
   justify-content: space-between;

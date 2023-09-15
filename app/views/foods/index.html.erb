@@ -1,7 +1,7 @@
-<table class="food_table">
+<table class="table table-bordered">
 <thead>
 <tr>
-<th>Name</th>
+<th>Food</th>
 <th>Measurement</th>
 <th>Unit Price</th>
 <th>Quantity</th>
@@ -9,7 +9,7 @@
 </tr>
 </thead>
 <tbody>
-<% @foods.each do |food|%>
+<% @foods.includes(:user).each do |food|%>
     <tr>
     <td><%= food.name%></td>
     <td><%= food.measurement_unit%></td>
@@ -17,7 +17,7 @@
     <td><%= food.quantity%></td>
     <td>
     <% if food.user == current_user %>
-      <%= form_with(model: food, url: user_food_path(current_user, food), method: :delete, local: true, data: { confirm: 'Are you sure?' }) do |form| %>
+      <%= form_with(model: food, url: food_path(current_user, food), method: :delete, local: true, data: { confirm: 'Are you sure?' }) do |form| %>
         <%= form.submit 'Remove', class: 'btn btn-danger' %>
       <% end %>
     <% end %>

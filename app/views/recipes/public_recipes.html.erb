@@ -1,6 +1,6 @@
 <h1>Public Recipes</h1>
 <div class="recipe-container flex-col">
-<ul>
+<ul class="flex-col">
   <% @public_recipes.each do |recipe| %>
     <div class="recipe-card">
         <div>
@@ -8,8 +8,8 @@
             <p>By: <%= recipe.user.name %></p>
         </div>
         <div>
-            <p>Total Food Item:</p>
-            <p>Total Price: $</p>
+            <p>Total Food Item: <%=@total_food_items%></p>
+            <p>Total Price: <%=@total_price%> $</p>
         </div>
     </div>
   <% end %>

@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
 
   def index
-    @recipes = current_user.recipes
+    @recipes = current_user.recipes.includes(:foods)
   end
 
   def new
@@ -14,7 +14,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
 
     if current_user == @recipe.user
-      # @foods_not_in_recipe = Food.where.not(id: @recipe.foods.pluck(:id))
+      @foods_not_in_recipe = Food.where.not(id: @recipe.foods.pluck(:id))
 
       if params[:recipe].present? && params[:recipe][:food_ids].present?
         food_ids = params[:recipe][:food_ids].reject(&:empty?) # Remove empty strings
@@ -30,8 +30,22 @@ class RecipesController < ApplicationController
     render 'add_ingredient'
   end
 
+  def remove_food
+    @recipe = Recipe.find(params[:id])
+    @food = Food.find(params[:food_id])
+    if current_user == @recipe.user
+      @recipe.foods.delete(@food)
+      flash[:notice] = 'Ingredient removed successfully.'
+    else
+      flash[:alert] = 'You do not have permission to remove ingredients from this recipe.'
+    end
+    redirect_to @recipe
+  end
+
   def public_recipes
     @public_recipes = Recipe.where(public: true)
+    @total_food_items = Food.sum(:quantity)
+    @total_price = Food.joins(:recipe_foods).sum('foods.quantity * foods.price')
   end
 
   def create
