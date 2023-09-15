@@ -9,6 +9,27 @@ class RecipesController < ApplicationController
     @recipe = Recipe.new
   end
 
+  # Add Ingredient
+  def add_ingredient
+    @recipe = Recipe.find(params[:id])
+
+    if current_user == @recipe.user
+      # @foods_not_in_recipe = Food.where.not(id: @recipe.foods.pluck(:id))
+
+      if params[:recipe].present? && params[:recipe][:food_ids].present?
+        food_ids = params[:recipe][:food_ids].reject(&:empty?) # Remove empty strings
+        @recipe.foods << Food.where(id: food_ids)
+        flash[:notice] = 'Ingredients added successfully.'
+        redirect_to @recipe
+        return
+      end
+    else
+      flash[:alert] = 'You do not have permission to add ingredients to this recipe.'
+    end
+
+    render 'add_ingredient'
+  end
+
   def public_recipes
     @public_recipes = Recipe.where(public: true)
   end
@@ -20,7 +41,7 @@ class RecipesController < ApplicationController
       redirect_to recipe_path(@recipe)
     else
       flash.now[:alert] = 'Recipe creation failed.'
-      render :new # Changed 'redirect_to' to 'render'
+      render :new
     end
   end
 
@@ -32,7 +53,7 @@ class RecipesController < ApplicationController
     else
       flash[:alert] = 'Access denied: You are not allowed to delete this recipe.'
     end
-    redirect_to recipes_path # Removed the comma at the end
+    redirect_to recipes_path
   end
 
   def show
@@ -55,7 +76,7 @@ class RecipesController < ApplicationController
       flash[:alert] = 'You do not have permission to toggle this recipe.'
     end
 
-    redirect_to recipe_path(@recipe) # Added @recipe to the redirect
+    redirect_to recipe_path(@recipe)
   end
 
   private
