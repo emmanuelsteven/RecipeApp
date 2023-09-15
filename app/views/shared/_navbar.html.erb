@@ -1,12 +1,13 @@
 <div class='navCont'>
   <nav class='navbar'>
-  <%= link_to 'RecipeApp', users_path, class:'logo' %>
+  <%= link_to 'RecipeApp', user_session_path, class:'logo' %>
     <section class='controls'>
       <% if user_signed_in?%>
-      <%= link_to 'FoodList',user_foods_path(current_user), class: 'navlinks'%>
+      <%= link_to 'Foods',user_foods_path(current_user), class: 'navlinks'%>
       <%= link_to 'AddFood',new_user_food_path(current_user), class: 'navlinks'%>
-      <%= link_to 'Edit registration', edit_user_registration_path , class: 'navlinks'%>
-      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'navlinks'%>
+      <%= link_to 'Recipes', recipes_path, class: 'navlinks'%>
+      <%= link_to "Public Recipes", public_recipes_recipes_path, class: 'navlinks' %>
+      <%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_method: :delete }, class: "navlinks" %>
       <% else %>
       <%= link_to 'Sign In', user_session_path,class: 'navlinks'%>
       <% end %>      
