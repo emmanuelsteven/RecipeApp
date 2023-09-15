@@ -92,6 +92,11 @@ class RecipesController < ApplicationController
 
     redirect_to recipe_path(@recipe)
   end
+  def generate_shopping_list
+    @recipe = Recipe.find(params[:id])
+    @required_foods = @recipe.foods.where.not(user: current_user).includes(:user)
+    @total_value = @required_foods.sum { |food| food.quantity * food.price }
+  end
 
   private
 
