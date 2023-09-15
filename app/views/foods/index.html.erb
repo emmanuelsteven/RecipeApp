@@ -1,0 +1,34 @@
+
+
+<%= link_to 'AddFood', new_food_path, class: 'btn btn-primary mt-4 add-btn' %>
+<ul class="flex-col">
+<table class="table table-bordered">
+<thead>
+<tr>
+<th>Food</th>
+<th>Measurement</th>
+<th>Unit Price</th>
+<th>Quantity</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody>
+<% @foods.includes(:user).each do |food|%>
+    <tr>
+    <td><%= food.name%></td>
+    <td><%= food.measurement_unit%></td>
+    <td>£<%= food.price%></td>
+    <td><%= food.quantity%></td>
+    <td>
+    <% if food.user == current_user %>
+      <%= form_with(model: food, url: food_path(current_user, food), method: :delete, local: true, data: { confirm: 'Are you sure?' }) do |form| %>
+        <%= form.submit 'Remove', class: 'btn btn-danger' %>
+      <% end %>
+    <% end %>
+  </td>
+        </tr>
+        <% end %>
+        </tbody>
+
+  
+</table>

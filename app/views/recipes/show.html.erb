@@ -1,0 +1,55 @@
+<a href="<%= recipe_path()%>">
+  <%=link_to '⬅',recipes_path, class: 'btn btn-lg'%>
+</a>
+<h1 class="center-text"> <%=@recipe.name%> </h1>
+<div class="recipe-preview-card flex-col">
+<div class="public-toggle-buttons-row"><h5>Preparation time: <%=@recipe.preparation_time%> mins</h5> 
+<h5>Public:  <% if current_user == @recipe.user %>
+          <% if @recipe.public %>
+            <%= link_to 'Make Private', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
+          <% else %>
+            <%= link_to 'Make Public', recipe_path(@recipe, toggle_recipe_public: true), method: :patch, class: 'btn btn-primary btn-sm' %>
+          <% end %>
+        <% end %>
+</h5>
+</div>
+<h5>Cooking time: <%=@recipe.cooking_time%> mins</h5>
+<h5>Steps:<br><%=@recipe.description%></h5>
+<p class="public-toggle-buttons-row">
+<%= link_to 'Generate Shopping List', generate_shopping_list_recipe_path(@recipe), class: 'btn btn-primary' %>   
+<% if current_user == @recipe.user %> 
+<%= link_to 'Add Ingredient', add_ingredient_recipe_path(@recipe), class: 'btn btn-primary' %>
+<% end %>
+</p>
+
+<!-- Table-->
+<h3>Required Food Items</h3>
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Food</th>
+      <th>Quantity</th>
+      <th>Measurement Unit</th>
+      <th>Price</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @recipe.foods.each do |food| %>
+      <tr>
+         <td><%= food.name %></td>
+        <td><%= food.quantity %></td>
+        <td><%= food.measurement_unit %></td>
+        <td><%= number_to_currency(food.price) %></td>
+        <td>
+          <% if current_user == @recipe.user %>
+            <%= form_tag(remove_food_recipe_path(@recipe, food_id: food.id), method: :delete) do %>
+            <%= submit_tag 'Remove Food', class: 'btn btn-danger btn-sm' %>
+            <% end %>
+          <% end %>
+        </td>
+      </tr>
+       <% end %>
+  </tbody>
+</table>
+</div>

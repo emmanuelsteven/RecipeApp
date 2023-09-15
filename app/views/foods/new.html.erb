@@ -1,0 +1,18 @@
+<div>
+<h1>Add Food</h1>
+  <%= form_with model: [@user,@food], class:'form', url: foods_path(user_id: params[:user_id]), method: :post do |form| %> 
+
+    <%= form.label :name, class: 'post_label' %> </br>
+    <%= form.text_field :name, required: true, class:'post_title' , placeholder: 'e.g chicken' %> </br>
+    <%= form.label :measurement_unit, class: 'post_label' %> </br>
+    <%= form.text_field :measurement_unit, required: true, class:'post_text', placeholder: 'kilogram' %> </br>
+    <%= form.label :price, class: 'post_label' %> </br>
+    <%= form.text_field :price, required: true, class:'post_text', placeholder: '100' %> </br>
+    <%= form.label :quantity, class: 'post_label' %> </br>
+    <%= form.number_field :quantity, required: true, class:'post_text', placeholder: 'Enter blog post' %> </br>
+    </br>
+    <%= form.submit "Add Food", class: 'post_btn' %>
+  <% end %>
+</div>
+
+

@@ -1,0 +1,19 @@
+<h1>My Recipes</h1>
+<div class="recipe-container flex-col">
+<%= link_to 'Create new Recipe', new_recipe_path(@recipe), class: 'btn btn-primary mt-4 custom-btn' %>
+<ul class="flex-col">
+  <% @recipes.each do |recipe| %>
+    <div class="recipe-card">
+        <div>
+            <h2><%=link_to recipe.name, recipe_path(recipe)%></h2>
+          <% if recipe.user == current_user %>   
+              <%= form_with(model: recipe, method: :delete, local: true, data: { confirm: 'Are you sure?' }) do |form| %>
+              <%= form.submit 'Delete', class: 'delete-recipe', class: "btn btn-danger" %>
+            <% end %>
+          <% end %>
+           </div>
+         <p><%= recipe.description %></p>
+    </div>
+  <% end %>
+</ul>
+</div>

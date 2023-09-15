@@ -1,0 +1,46 @@
+.recipe-container {
+  display: flex;
+  gap: 20px;
+  padding: 3% 15%;
+}
+
+.recipe-container ul {
+  display: flex;
+  gap: 20px;
+}
+
+.custom-btn {
+  width: 200px;
+  align-self: flex-end;
+}
+
+.recipe-card {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  border: 3px solid black;
+  padding: 2% 3%;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.recipe-preview-card {
+  position: absolute;
+  left: 11.5%;
+  display: flex;
+  width: 70%;
+  column-gap: 50px;
+  border-bottom: 2px solid black;
+  padding: 3% 3%;
+}
+
+.public-toggle-buttons-row {
+  display: flex;
+  justify-content: space-between;
+}
